@@ -1,0 +1,11 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_5_layout.html.twig']
+
+    globals:
+        # creation de la variable global notif pour l'appeller dans navbar template
+        notif: '@App\Service\ReportNotification'
+
+when@test:
+    twig:
+        strict_variables: true

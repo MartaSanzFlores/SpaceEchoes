@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter une catégorie
+{% endblock %}
+
+{% block body %}
+	{{ include('_nav.html.twig') }}
+
+	<div class="contaier-fluid m-5 d-flex flex-column align-items-center ">
+		<h1 class="text-center ourShadow">Ajouter une catégorie</h1>
+		<div class="d-flex flex-column align-items-end w-50">
+        <a href="{{ path('back_category') }}">
+			<button type="button" class="btn ourBtnXl m-2">Retour à la liste</button>
+		</a>
+		{{ include('back/category/_form.html.twig') }}
+	</div>
+
+</div>{% endblock %}

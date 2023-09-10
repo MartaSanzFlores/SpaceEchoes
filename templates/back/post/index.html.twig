@@ -1,0 +1,49 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+{{ include('_nav.html.twig') }}
+
+<div class="contaier-fluid mx-5">
+    <h1 class="text-center pt-5 ourShadow">Liste des articles</h1>   
+    <div class="d-flex justify-content-end">
+        <a  href="{{ path('back_post_new') }}">
+            <button type="button" class="btn ourBtn m-2">Ajouter</button>
+        </a>
+    </div>
+    <table class="table table-hover table-bordered text-center">
+        <thead class="ourHead">
+            <tr>
+                <th class="OurTd">Id</th>
+                <th class="OurTd">Titre</th>
+                <th class="OurTd">Résumé</th>
+                <th class="OurTd">Date de publication</th>
+                <th class="OurTd">Opérations</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td class="OurTd">{{ post.id }}</td>
+                <td class="OurTd">{{ post.title }}</td>
+                <td class="OurTd">{{ post.excerpt }}</td>
+                <td class="OurTd">{{ post.publishedAt ? post.publishedAt|date('Y-m-d H:i:s') : '' }}
+                <td class="OurTd">
+                    <a href="{{ path('back_post_show', {'id': post.id}) }}">
+                        <button type="button" class="btn ourBtn my-1">Détails</button>
+                    </a>
+                    <a href="{{ path('back_post_edit', {'id': post.id}) }}">
+                        <button type="button" class="btn ourBtn my-1">Modifier</button>
+                </td>
+            </tr>
+        {% else %}
+            <tr class="OurTd">
+                <td class="OurTd" colspan="9">Articles non trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+   
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block body %}
+{{ include('_nav.html.twig') }}
+
+<div class="contaier-fluid mx-5">
+    <h1 class="text-center pt-5 ourShadow">Liste des auteurs</h1>   
+    <div class="d-flex justify-content-end">
+        <a  href="{{ path('back_author_new') }}">
+            <button type="button" class="btn ourBtn m-2">Ajouter</button>
+        </a>
+    </div>
+    <table class="table table-hover table-bordered text-center">
+        <thead class="ourHead">
+            <tr>
+                <th class="OurTd">Id</th>
+                <th class="OurTd">Prénom</th>
+                <th class="OurTd">Nom</th>
+                <th class="OurTd">Opérations</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors %}
+            <tr>
+                <td class="OurTd">{{ author.id }}</td>
+                <td class="OurTd">{{ author.firstName }}</td>
+                <td class="OurTd">{{ author.lastName }}</td>
+                <td class="OurTd">
+                    <a href="{{ path('back_author_show', {'id': author.id}) }}">
+                        <button type="button" class="btn ourBtn">Détails</button>
+                    </a>
+                    <a href="{{ path('back_author_edit', {'id': author.id}) }}">
+                        <button type="button" class="btn ourBtn">Modifier</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr >
+                <td class="OurTd" colspan="6">Auteurs non trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %}Utilisateur
+{% endblock %}
+
+{% block body %}
+	{{ include('_nav.html.twig') }}
+
+	<div class="contaier-fluid mx-5">
+		<h1 class="text-center pt-5 ourShadow">Utilisateur</h1>
+		<div class="d-flex justify-content-end">
+			<a href="{{ path('back_user_edit', {'id': user.id}) }}">
+				<button type="button" class="btn ourBtn m-2">Modifier</button>
+			</a>
+			<a href="{{ path('back_user') }}">
+				<button type="button" class="btn ourBtnXl m-2">Retour à la liste</button>
+			</a>
+		</div>
+		<div class="d-flex justify-content-center">
+			<table class="table table-hover table-bordered text-center">
+				<tbody>
+					<tr>
+						<th class="table-secondary">Id</th>
+						<td>{{ user.id }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Email</th>
+						<td>{{ user.email }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Roles</th>
+						<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Nom d'utilisateur</th>
+						<td>{{ user.userName }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Date de creation</th>
+						<td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Date de modification</th>
+						<td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="d-flex justify-content-end">
+			{{ include('back/user/_delete_form.html.twig') }}
+		</div>
+
+	</div>
+
+{% endblock %}

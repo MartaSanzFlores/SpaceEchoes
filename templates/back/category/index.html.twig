@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+{{ include('_nav.html.twig') }}
+
+<div class="contaier-fluid mx-5">
+    <h1 class="text-center pt-5 ourShadow">Liste des catégories</h1>   
+    <div class="d-flex justify-content-end">
+        <a  href="{{ path('back_category_new') }}">
+            <button type="button" class="btn ourBtn m-2">Ajouter</button>
+        </a>
+    </div>
+    <table class="table table-hover table-bordered text-center">
+        <thead class="ourHead">
+            <tr>
+                <th class="OurTd">Id</th>
+                <th class="OurTd">Nom</th>
+                <th class="OurTd">Opérations</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for category in categories %}
+            <tr>
+                <td class="OurTd">{{ category.id }}</td>
+                <td class="OurTd">{{ category.name }}</td>
+                <td class="OurTd">
+                 <a href="{{ path('back_category_show', {'id': category.id}) }}">
+                        <button type="button" class="btn ourBtn">Détails</button>
+                    </a>
+                    <a href="{{ path('back_category_edit', {'id': category.id}) }}">
+                        <button type="button" class="btn ourBtn">Modifier</button>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr >
+                <td class="OurTd" colspan="5">Catégories non trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

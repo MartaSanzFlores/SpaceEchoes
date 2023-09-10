@@ -1,0 +1,102 @@
+{% block nav %}
+
+<!-- Navbar -->
+<header>
+		<nav
+			class="navbar navbar-expand-lg ourNavBar p-0 m-0">
+			<!-- Container wrapper -->
+			<div
+				class="container-fluid">
+				<!-- Toggle button -->
+				<button class="navbar-toggler ourToggleButton" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
+				<div
+					class="d-flex align-items-center">
+					<!-- Navbar brand -->
+					<a class="navbar-brand mt-2 mt-lg-0" href="{{path('back_home')}}">
+						<img src="{{ asset('images/logo.png') }}" height="70" alt="SpaceEchoeslogo" loading="lazy"/>
+					</a>
+
+				</div>
+				<!-- Collapsible wrapper start-->
+				<div
+					class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+
+					<!-- Left links start-->
+
+					<ul class="navbar-nav mb-2 mb-lg-0 ">
+						{% if is_granted('ROLE_MANAGER') %}
+							<li class="nav-item">
+								<a class="nav-link ourLink" href="{{path('back_post')}}">Articles</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link ourLink" href="{{path('back_picture')}}">Images</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link ourLink" href="{{path('back_author')}}">Auteur</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link ourLink" href="{{path('back_category')}}">Categories</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item">
+								<a class="nav-link ourLink" href="{{path('back_user')}}">Utilisateurs</a>
+							</li>
+						{% endif %}
+						</ul>
+						<!-- Left links end-->
+					</div>
+					<!-- Collapsible wrapper end -->
+
+					<!-- Right elements -->
+					<div class="d-flex align-items-center">
+						<!-- Icon -->
+
+
+						<!-- Notifications -->
+						{% if is_granted('ROLE_MANAGER') %}
+						<div>
+							<a class="text-reset me-3 hidden-arrow" href="{{path('back_review')}}" role="button"> <i class="fas fa-flag fa-lg"></i>
+							{# on affiche le nombre des commentaires signalés s'il est strictement sperieure à 0. #}
+								<span class="badge rounded-pill badge-notification bg-danger">{{ notif.countReportsNotif == 0 ? "" : notif.countReportsNotif }}</span>
+							</a>
+						</div>
+						<!-- Avatar -->
+						<div class="dropdown me-3">
+							<a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-user fa-lg ourUser"></i>
+							</a>
+							<ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuAvatar">
+								<li>
+									<a class="dropdown-item" href="{{path('back_profile')}}">My profile</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{path('back_logout')}}">Logout</a>
+								</li>
+							</ul>
+						</div>
+						{% endif %}
+						<div>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								{% if is_granted('ROLE_ADMIN') %}
+
+									<span>Administrateur</span>
+
+								{% elseif is_granted('ROLE_MANAGER') %}
+
+									<span>Manager</span>
+
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+					<!-- Right elements -->
+				</div>
+				<!-- Container wrapper -->
+			</nav>
+			</header>
+			<!-- Navbar -->
+
+{% endblock %}

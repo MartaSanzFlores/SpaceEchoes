@@ -1,0 +1,10 @@
+
+<div class="card w-100 p-5 m-auto ">
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+
+	{{ form_widget(form) }}
+  <button class="btn ourBtnXl mt-4">{{ button_label|default('Enregistrer') }}</button>	
+	{{ form_end(form) }}
+</div>
+

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Détail Catégorie
+{% endblock %}
+
+{% block body %}
+	{{ include('_nav.html.twig') }}
+	<div class="contaier-fluid mx-5">
+		<h1 class="text-center pt-5 ourShadow">Détail Catégorie</h1>
+		<div class="d-flex justify-content-end">
+			<a href="{{ path('back_category_edit', {'id': category.id}) }}">
+				<button type="button" class="btn ourBtn m-2">Modifier</button>
+			</a>
+			<a href="{{ path('back_category') }}">
+				<button type="button" class="btn ourBtnXl m-2">Retour à la liste</button>
+			</a>
+		</div>
+		<div class="d-flex justify-content-center">
+			<table class="table table-hover table-bordered text-center">
+				<tbody>
+					<tr>
+						<th class="table-secondary">Id</th>
+						<td>{{ category.id }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Nom</th>
+						<td>{{ category.name }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Date de création</th>
+						<td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+					<tr>
+						<th class="table-secondary">Date de mise à jour</th>
+						<td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="d-flex justify-content-end">
+			{{ include('back/category/_delete_form.html.twig') }}
+		</div>
+
+	</div>
+{% endblock %}

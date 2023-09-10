@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter une nouvelle image
+{% endblock %}
+
+{% block body %}
+	{{ include('_nav.html.twig') }}
+	<div class="contaier-fluid m-5 d-flex flex-column align-items-center">
+		<h1 class="text-center ourShadow">Ajouter une nouvelle image</h1>
+		<div class="d-flex flex-column align-items-end ourContainer">
+			<a href="{{ path('back_picture') }}">
+				<button type="button" class="btn ourBtnXl m-2">Retour à la liste</button>
+			</a>
+			{{ include('back/picture/_form.html.twig') }}
+		</div>
+
+	</div>
+{% endblock %}

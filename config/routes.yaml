@@ -1,0 +1,7 @@
+# config/routes.yaml pour la connexion et deconnexion de l'Api
+api_login_check:
+    path: /api/login_check
+api_logout:
+    path: api/logout
+    methods: POST
+    controller: App\Controller\Api\LogoutController::logout

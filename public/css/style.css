@@ -1,0 +1,95 @@
+body{
+    height: 100%;
+    min-height: 100vh;
+}
+*{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    
+}
+body{ 
+    background: linear-gradient(45deg, #38D7C3, black);
+}
+section{
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ourShadow{
+    text-shadow: 1px 1px 2px #38D7C3;
+    font-weight: 500;
+    color: #F5F5F5;
+}
+
+.ourLogintitle{
+    text-shadow: 1px 1px 2px #38D7C3;
+    font-weight: 500;
+    color: black;
+}
+.ourBtn{
+    background-color: #181818;
+    box-shadow: 1px 1px 3px #38D7C3;
+    color: white;
+    width: 130px;
+    text-align: center;
+}
+.ourBtnXl{
+    background-color: #181818;
+    box-shadow: 1px 1px 3px #38D7C3;
+    color: white;
+    width: 250px;
+    text-align: center;
+}
+.ourBtn:hover, .ourBtnXl:hover{
+    background-color: #3f3e3e;
+    box-shadow: 1px 1px 3px #38D7C3;
+    color: white;
+}
+
+.ourCard{
+    background-color: #FFFBEE;
+}
+
+.ourForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+table{
+    background-color: white;
+}
+.ourHead{
+    background-color:#30beab;
+    font-weight: 700;
+    color: black;
+}
+.ourNavBar{
+    background-color: #181818;
+    color: #F5F5F5;
+}
+.ourLink, .ourToggleButton{
+    color: #F5F5F5;
+}
+.ourLink:hover{
+    color: #30beab;
+}
+.ourUser{
+    color: #30beab;
+}
+img{
+    height:70px;
+    
+}
+.OurTd {
+    text-align: center;
+    vertical-align: middle;
+}
+.ourWidth{
+    width: 700px;
+}
+.ourContainer{
+    width: 1200px;
+}
+
