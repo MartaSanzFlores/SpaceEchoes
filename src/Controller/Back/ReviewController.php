@@ -10,14 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/back/review")
- */
+#[Route('/back/review')]
 class ReviewController extends AbstractController
 {
-    /**
-     * @Route("/", name="back_review", methods={"GET"})
-     */
+    #[Route('/', name: 'back_review', methods: ['GET'])]
     public function index(ReviewRepository $reviewRepository): Response
     {
         return $this->render('back/review/index.html.twig', [
@@ -25,9 +21,7 @@ class ReviewController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_review_show", methods={"GET"})
-     */
+    #[Route('/{id}', name: 'back_review_show', methods: ['GET'])]
     public function show(Review $review): Response
     {
         return $this->render('back/review/show.html.twig', [
@@ -35,11 +29,7 @@ class ReviewController extends AbstractController
         ]);
     }
 
-   
-
-    /**
-     * @Route("/{id}", name="back_review_delete", methods={"POST"})
-     */
+   #[Route('/{id}', name: 'back_review_delete', methods: ['POST'])]
     public function delete(Request $request, Review $review, ReviewRepository $reviewRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$review->getId(), $request->request->get('_token'))) {

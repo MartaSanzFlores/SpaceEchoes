@@ -10,14 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/back/author")
- */
+#[Route('/back/author')]
 class AuthorController extends AbstractController
 {
-    /**
-     * @Route("/", name="back_author", methods={"GET"})
-     */
+
+    #[Route('/', name: 'back_author', methods: ['GET'])]
     public function index(AuthorRepository $authorRepository): Response
     {
         return $this->render('back/author/index.html.twig', [
@@ -25,9 +22,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="back_author_new", methods={"GET", "POST"})
-     */
+    #[Route('/new', name: 'back_author_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AuthorRepository $authorRepository): Response
     {
         $author = new Author();
@@ -46,9 +41,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_author_show", methods={"GET"})
-     */
+    #[Route('/{id}', name: 'back_author_show', methods: ['GET'])]
     public function show(Author $author): Response
     {
         return $this->render('back/author/show.html.twig', [
@@ -56,9 +49,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="back_author_edit", methods={"GET", "POST"})
-     */
+    #[Route('/{id}/edit', name: 'back_author_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Author $author, AuthorRepository $authorRepository): Response
     {
         $form = $this->createForm(AuthorType::class, $author);
@@ -76,9 +67,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_author_delete", methods={"POST"})
-     */
+    #[Route('/{id}', name: 'back_author_delete', methods: ['POST'])]
     public function delete(Request $request, Author $author, AuthorRepository $authorRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$author->getId(), $request->request->get('_token'))) {

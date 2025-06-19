@@ -9,9 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/back/", name="back_home")
-     */
+
+    #[Route('/back', name: 'back_home')]
     public function index( UserRepository $userRepository): Response
     {   
         $userCount = $userRepository->getCountUser();
@@ -23,9 +22,7 @@ class MainController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/back/profile", name="back_profile")
-     */
+    #[Route('/back/profile', name: 'back_profile')]
     public function profile(): Response
     {   
         $userId = $this->getUser()->getId();

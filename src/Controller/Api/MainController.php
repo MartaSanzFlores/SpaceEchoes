@@ -10,9 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/api/", name="api_home")
-     */
+
+    #[Route('/api', name:'api_home')]
     public function home(PostRepository $postRepository, PictureRepository $pictureRepository): JsonResponse
     {
         //on utilise la méthode findRecentPosts() de PostRepository pour lister les 3 articles les plus récents

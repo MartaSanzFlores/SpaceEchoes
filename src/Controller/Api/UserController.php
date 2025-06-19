@@ -14,9 +14,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/api/user", name="api_user", methods={"POST"})
-     */
+
+    #[Route('/api/user', name:'api_user', methods:['POST'])]
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): JsonResponse
     {
         // on recupère le contenu de la requette vers l'api et on transforme le json en objet/array PHP
@@ -29,7 +28,7 @@ class UserController extends AbstractController
 
         if (empty($userName) || empty($password) || empty($email)) {
             return $this->json([
-                "message" => "Request field is empty"
+                'message' => 'Request field is empty'
             ], 400);
         }
 
@@ -38,21 +37,21 @@ class UserController extends AbstractController
 
         if (!empty($emailEsxist)) {
             return $this->json([
-                "message" => "This email is already used"
+                'message' => 'This email is already used'
             ], 400);
         }
 
         //verifier que l'email est de type : exemple@exemple.dom
         if (!preg_match('#^[a-z0-9-_.]+@[a-z0-9-_.]+\.[a-z]{2,3}$#', $email) ) {
             return $this->json([
-                "message" => "This email in not valid"
+                'message' => 'This email in not valid'
             ], 400);
         }
 
         //verifier que le mdp doit contenir au mois 8 caracteres, au moins une majuscule, au moins une miniscule et au moins un caractere special 
         if (!preg_match('#^(?=^.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)#', $password) ) {
             return $this->json([
-                "message" => "This password in not valid"
+                'message' => 'This password in not valid'
             ], 400);
         }
 
@@ -66,7 +65,7 @@ class UserController extends AbstractController
         $user->setUserName($userName);
         $user->setEmail($email);
         $user->setPassword($hashedPassword);
-        $user->setRoles(["ROLE_USER"]);
+        $user->setRoles(['ROLE_USER']);
 
         // on sauvegarde l'entité review (persist et flush)
         $userRepository->add($user, true);
@@ -76,16 +75,14 @@ class UserController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "success saving data",
-            "token" => $token,
-            "username" => $userName,
-            "role" => ["ROLE_USER"]
+            'message' => 'success saving data',
+            'token' => $token,
+            'username' => $userName,
+            'role' => ['ROLE_USER']
         ]);
     }
 
-    /**
-     * @Route("/api/secure/user", name="api_user_edit", methods={"PUT"})
-     */
+    #[Route('/api/secure/user', name:'api_user_edit', methods:['PUT'])]
     public function edit(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): JsonResponse
     {
         // on recupère le contenu de la requette vers l'api et on transforme le json en objet/array PHP
@@ -98,7 +95,7 @@ class UserController extends AbstractController
 
         if (empty($userName) || empty($email)) {
             return $this->json([
-                "message" => "Request field is empty"
+                'message' => 'Request field is empty'
             ], 400);
         }
 
@@ -111,7 +108,7 @@ class UserController extends AbstractController
             //verifier que le mdp doit contenir au mois 8 caracteres, au moins une majuscule, au moins une miniscule et au moins un caractere special 
             if (!preg_match('#^(?=^.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)#', $password) ) {
                 return $this->json([
-                    "message" => "This password in not valid"
+                    'message' => 'This password in not valid'
                 ], 400);
             }
 
@@ -126,14 +123,14 @@ class UserController extends AbstractController
         // on verfie que l'email n'existe pas et au meme temps que ce n'est pas celui qui est relier avec ce compte 
         if (!empty($emailEsxist) && ($email != $user->getEmail())) {
             return $this->json([
-                "message" => "This email is already used"
+                'message' => 'This email is already used'
             ], 400);
         }
 
         //verifier que l'email est de type : exemple@exemple.dom
         if (!preg_match('#^[a-z0-9-_.]+@[a-z0-9-_.]+\.[a-z]{2,3}$#', $email) ) {
             return $this->json([
-                "message" => "This email in not valid"
+                'message' => 'This email in not valid'
             ], 400);
         }
 
@@ -151,16 +148,14 @@ class UserController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "success editing data",
-            "token" => $token,
-            "username" => $userName,
-            "role" => $role
+            'message' => 'success editing data',
+            'token' => $token,
+            'username' => $userName,
+            'role' => $role
         ]);
     }
 
-    /**
-     * @Route("/api/secure/user/details", name="api_user_details", methods={"GET"})
-     */
+    #[Route('/api/secure/user/details', name:'api_user_details', methods:['GET'])]
     public function userDetails(): JsonResponse
     {
         // Option 1: decoder le token
@@ -168,7 +163,7 @@ class UserController extends AbstractController
         // $token = $request->headers->get('Authorization');
 
         // // decode du token
-        // $tokenParts = explode(".", $token);  
+        // $tokenParts = explode('.', $token);  
         // $tokenPayload = base64_decode($tokenParts[1]);
         // $jwtPayload = json_decode($tokenPayload);
         // $email = $jwtPayload->email;
@@ -181,8 +176,8 @@ class UserController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "role" => $userRole,
-            "user_name" => $userName
+            'role' => $userRole,
+            'user_name' => $userName
         ]);
     }
 }

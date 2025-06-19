@@ -11,14 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @Route("/back/user")
- */
+#[Route('/back/user')]
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="back_user", methods={"GET"})
-     */
+    #[Route('/', name: 'back_user', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('back/user/index.html.twig', [
@@ -26,9 +22,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="back_user_new", methods={"GET", "POST"})
-     */
+    #[Route('/new', name: 'back_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
@@ -62,9 +56,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_user_show", methods={"GET"})
-     */
+    #[Route('/{id}', name: 'back_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('back/user/show.html.twig', [
@@ -72,9 +64,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})
-     */
+    #[Route('/{id}/edit', name: 'back_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -107,9 +97,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_user_delete", methods={"POST"})
-     */
+    #[Route('/{id}', name: 'back_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {

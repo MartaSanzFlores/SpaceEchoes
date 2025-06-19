@@ -10,9 +10,7 @@ class LogoutController extends AbstractController
 {
 
 
-    /**
-     * @Route("/api/logout", name="api_logout")
-     */
+    #[Route('/api/logout', name:'api_logout')]
     public function logout(): Response
     {
         // TODO desactiver le Token JWT

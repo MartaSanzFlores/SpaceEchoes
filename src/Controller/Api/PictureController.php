@@ -10,10 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PictureController extends AbstractController
 {
-    /**
-     * Get Post collection
-     * @Route("/api/pictures", name="api_pictures", methods={"GET"})
-     */
+
+    #[Route('/api/pictures', name:'api_pictures', methods:['GET'])]
     public function getCollectionPicture(PictureRepository $pictureRepository): JsonResponse
     {
         //on utilise la méthode getPublishedGallery() crée dans PictureRepository pour lister tous les images
@@ -35,10 +33,7 @@ class PictureController extends AbstractController
         );
     }
 
-    /**
-     * Picture like
-     * @Route("/api/secure/pictures/{id<\d+>}/like", name="api_picture_like", methods={"POST"})
-     */
+    #[Route('/api/secure/pictures/{id<\d+>}/like', name:'api_picture_like', methods:['POST'])]
     public function likePicture(Picture $picture, PictureRepository $pictureRepository): JsonResponse
     {
         // on recupère toutes les images de la galerie
@@ -47,7 +42,7 @@ class PictureController extends AbstractController
         // si l'image n'appartient pas à la galerie, l'image ne peut pas être liké
         if(!in_array($picture, $gallery)){
             return $this->json([
-                "message" => "Can't like this picture"
+                'message' => 'Can\'t like this picture'
             ], 400);
         }
 
@@ -59,14 +54,12 @@ class PictureController extends AbstractController
 
         // on return un message de success
         return $this->json([
-         "message" => "success saving data"
+         'message' => 'success saving data'
         ]);
     }
 
-    /**
-     * Picture remove like
-     * @Route("/api/secure/pictures/{id<\d+>}/remove_like", name="api_picture_remove_like", methods={"POST"})
-     */
+
+    #[Route('/api/secure/pictures/{id<\d+>}/remove_like', name:'api_picture_remove_like', methods:['POST'])]
     public function removeLikePicture(Picture $picture, PictureRepository $pictureRepository): JsonResponse
     {
         // on supprime le like de l'instance
@@ -77,7 +70,7 @@ class PictureController extends AbstractController
 
         // on return un message de success
         return $this->json([
-         "message" => "success remove data"
+         'message' => 'success remove data'
         ]);
     }
 }

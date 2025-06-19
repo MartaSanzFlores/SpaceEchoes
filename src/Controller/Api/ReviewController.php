@@ -12,9 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReviewController extends AbstractController
 {
-    /**
-     * @Route("/api/secure/posts/{id<\d+>}/review", name="api_review", methods={"POST"})
-     */
+
+    #[Route('/api/secure/posts/{id<\d+>}/review', name:'api_review', methods:['POST'])]
     public function new(Request $request, ReviewRepository $reviewRepository, Post $post): JsonResponse
     {
         // on recupère le contenu de la requette vers l'api et on transforme le json en objet/array PHP
@@ -26,7 +25,7 @@ class ReviewController extends AbstractController
         // si le contenu de commentaire est vide ou n'existe pas on envoie un message d'erreur
         if (empty($content) || !isset($content)) {
             return $this->json([
-                "message" => "Request content is empty or missing"
+                'message' => 'Request content is empty or missing'
             ], 400);
         }
 
@@ -43,13 +42,11 @@ class ReviewController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "success saving data"
+            'message' => 'success saving data'
         ]);
     }
 
-    /**
-     * @Route("/api/secure/posts/review/{id<\d+>}", name="api_review_edit", methods={"PATCH"})
-     */
+    #[Route('/api/secure/posts/review/{id<\d+>}', name:'api_review_edit', methods:['PATCH'])]
     public function edit(Request $request, ReviewRepository $reviewRepository, Review $review): JsonResponse
     {
         // on recupère le contenu de la requette vers l'api et on transforme le json en objet/array PHP
@@ -61,7 +58,7 @@ class ReviewController extends AbstractController
         // si le contenu de commentaire est vide ou n'existe pas on envoie un message d'erreur
         if (empty($content) || !isset($content)) {
             return $this->json([
-                "message" => "Request content is empty or missing"
+                'message' => 'Request content is empty or missing'
             ], 400);
         }
 
@@ -73,13 +70,11 @@ class ReviewController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "success saving data"
+            'message' => 'success saving data'
         ]);
     }
 
-    /**
-     * @Route("/api/secure/posts/review/{id<\d+>}", name="api_review_delete", methods={"DELETE"})
-     */
+    #[Route('/api/secure/posts/review/{id<\d+>}', name:'api_review_delete', methods:['DELETE'])]
     public function delete(ReviewRepository $reviewRepository, Review $review): JsonResponse
     {
         // on sauvegarde l'entité review (persist et flush)
@@ -87,13 +82,11 @@ class ReviewController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "success deleting data"
+            'message' => 'success deleting data'
         ]);
     }
 
-    /**
-     * @Route("/api/secure/posts/review/{id<\d+>}/report", name="api_review_report", methods={"POST"})
-     */
+    #[Route('/api/secure/posts/review/{id<\d+>}/report', name:'api_review_report', methods:['POST'])]
     public function report(ReviewRepository $reviewRepository, Review $review): JsonResponse
     { 
         // on recupere l'utilisateur connecté
@@ -104,7 +97,7 @@ class ReviewController extends AbstractController
         // on envoie un message d'erreur si l'utilisateur a déja signalé le commentaire
         if (in_array($user, $users_report->toArray()) ) {
             return $this->json([
-                "message" => "This user has already reported this review"
+                'message' => 'This user has already reported this review'
             ], 400);
         }
 
@@ -116,7 +109,7 @@ class ReviewController extends AbstractController
 
         // on return un message de success
         return $this->json([
-            "message" => "Review reported",
+            'message' => 'Review reported',
         ]);
     }
 }

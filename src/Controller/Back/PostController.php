@@ -10,14 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/back/post")
- */
+#[Route('/back/post')]
 class PostController extends AbstractController
 {
-    /**
-     * @Route("/", name="back_post", methods={"GET"})
-     */
+    #[Route('/', name: 'back_post', methods: ['GET'])]
     public function index(PostRepository $postRepository): Response
     {
         return $this->render('back/post/index.html.twig', [
@@ -25,9 +21,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="back_post_new", methods={"GET", "POST"})
-     */
+    #[Route('/new', name: 'back_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PostRepository $postRepository): Response
     {
         $post = new Post();
@@ -51,9 +45,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_post_show", methods={"GET"})
-     */
+    #[Route('/{id}', name: 'back_post_show', methods: ['GET'])]
     public function show(Post $post): Response
     {
         return $this->render('back/post/show.html.twig', [
@@ -61,9 +53,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="back_post_edit", methods={"GET", "POST"})
-     */
+    #[Route('/{id}/edit', name: 'back_post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post, PostRepository $postRepository): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -81,9 +71,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_post_delete", methods={"POST"})
-     */
+    #[Route('/{id}', name: 'back_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, PostRepository $postRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {

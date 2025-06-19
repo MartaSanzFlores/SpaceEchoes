@@ -9,10 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    /**
-     * Get Post collection
-     * @Route("/api/posts", name="api_posts", methods={"GET"})
-     */
+
+    #[Route('/api/posts', name:'api_posts', methods:['GET'])]
     public function getCollectionPost(PostRepository $postRepository): JsonResponse
     {
         //on utilise la méthode getPublishedPosts() de PostRepository pour lister tous les articles 

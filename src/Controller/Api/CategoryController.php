@@ -9,9 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/api/categories", name="api_categories", methods={"GET"})
-     */
+    
+    #[Route('/api/categories', name:'api_categories', methods:['GET'])]
     public function getCollectionCategory(CategoryRepository $categoryRepository): JsonResponse
     {
         //on utilise la méthode findAll() de categoryRepository pour lister tous les categories 
