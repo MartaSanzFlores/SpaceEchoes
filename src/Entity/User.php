@@ -12,70 +12,51 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\UserRepository;
 
-/**
- * @ORM\Entity(repositoryClass=App\Repository\UserRepository::class)
- * @UniqueEntity("email")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('email')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank
-     * @Assert\Email
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
-     * @Assert\NotBlank
-     */
+    #[ORM\Column(type: 'json')]
+    #[Assert\NotBlank]
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank
      */
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank]
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Groups(['get_collection_post'])]
     private $userName;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="userReview", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'userReview', orphanRemoval: true)]
     private $reviews;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Picture::class, mappedBy="usersLikes")
-     */
+    #[ORM\ManyToMany(targetEntity: Picture::class, mappedBy: 'usersLikes')]
     private $pictures;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Review::class, mappedBy="UsersReports")
-     */
+    #[ORM\ManyToMany(targetEntity: Review::class, mappedBy: 'UsersReports')]
     private $reviewsReported;
 
     public function __construct()
@@ -182,9 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         // L'événement ORM\PrePersist est déclenché lorsque l'objet est enregistré dans la base de données pour la toute première fois. La date et l'heure courantes sont du coup utilisées pour la valeur de la propriété createdAt.
@@ -198,9 +177,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTimeImmutable();

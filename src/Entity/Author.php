@@ -9,45 +9,31 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=AuthorRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: AuthorRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Author
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Groups({"get_collection_post"})
-     * @Assert\NotBlank
-     */
+    #[ORM\Column(type: "string", length: 50)]
+    #[Groups(["get_collection_post"])]
+    #[Assert\NotBlank]
     private $firstName;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: "string", length: 50, nullable: true)]
+    #[Groups(["get_collection_post"])]
     private $lastName;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "author", orphanRemoval: true)]
     private $posts;
 
     public function __construct()
@@ -89,9 +75,7 @@ class Author
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -104,9 +88,7 @@ class Author
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTimeImmutable();
@@ -135,7 +117,6 @@ class Author
     public function removePost(Post $post): self
     {
         if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
             if ($post->getAuthor() === $this) {
                 $post->setAuthor(null);
             }

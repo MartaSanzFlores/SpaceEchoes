@@ -10,40 +10,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- *  @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups({"get_collection_post","get_collection_recent_posts", "get_collection_categories"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    #[Groups(["get_collection_post","get_collection_recent_posts", "get_collection_categories"])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Groups({"get_collection_post", "get_collection_categories"})
-     */
+    #[ORM\Column(type: "string", length: 50)]
+    #[Assert\NotBlank]
+    #[Groups(["get_collection_post", "get_collection_categories"])]
     private $name;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Post::class, mappedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: "categories")]
     private $posts;
 
     public function __construct()
@@ -73,9 +61,7 @@ class Category
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -85,14 +71,13 @@ class Category
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updatedAt = new \DateTimeImmutable();
+        return $this->updatedAt;
     }
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }

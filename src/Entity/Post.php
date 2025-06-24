@@ -15,98 +15,69 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=PostRepository::class)
- * @UniqueEntity("title")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+#[UniqueEntity('title')]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['get_collection_post'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=400)
-     * @Assert\NotBlank
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'string', length: 400)]
+    #[Assert\NotBlank]
+    #[Groups(['get_collection_post'])]
     private $title;
 
-    /**
-     * @ORM\Column(type="string", length=800)
-     * @Assert\NotBlank
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'string', length: 800)]
+    #[Assert\NotBlank]
+    #[Groups(['get_collection_post'])]
     private $excerpt;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
+    #[Groups(['get_collection_post'])]
     private $content;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank]
+    #[Groups(['get_collection_post'])]
     private $slug;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['get_collection_post'])]
     private $publishedAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="posts")
-     * @Assert\NotBlank
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'posts')]
+    #[Assert\NotBlank]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['get_collection_post'])]
     private $author;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Picture::class, inversedBy="post", cascade={"persist", "remove"})
-     * @Assert\NotBlank
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\OneToOne(targetEntity: Picture::class, inversedBy: 'post', cascade: ['persist', 'remove'])]
+    #[Assert\NotBlank]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['get_collection_post'])]
     private $picture;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $userPost;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="post", orphanRemoval=true)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'post', orphanRemoval: true)]
+    #[Groups(['get_collection_post'])]
     private $reviews;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="posts")
-     * 
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
+    #[Groups(['get_collection_post'])]
     private $categories;
 
     public function __construct()
@@ -184,10 +155,8 @@ class Post
     {
         return $this->createdAt;
     }
-    /**
-     * @ORM\PrePersist
-     * @return self
-     */
+
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -199,10 +168,8 @@ class Post
     {
         return $this->updatedAt;
     }
-    /**
-     * @ORM\PreUpdate
-     * @return self
-     */
+
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTimeImmutable();
@@ -241,7 +208,6 @@ class Post
       
     public function setUserPost(?User $userPost): self
     {
-        
         $this->userPost = $userPost;
 
         return $this;
@@ -268,7 +234,6 @@ class Post
     public function removeReview(Review $review): self
     {
         if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
             if ($review->getPost() === $this) {
                 $review->setPost(null);
             }

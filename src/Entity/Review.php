@@ -8,58 +8,41 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=ReviewRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: ReviewRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Review
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups({"get_collection_post"})
-     */
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    #[Groups(["get_collection_post"])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=500)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: "string", length: 500)]
+    #[Groups(["get_collection_post"])]
     private $content;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups(["get_collection_post"])]
     private $publishedAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: "reviews")]
+    #[ORM\JoinColumn(nullable: false)]
     private $post;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"get_collection_post"})
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "reviews")]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["get_collection_post"])]
     private $userReview;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="reviewsReported")
-     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: "reviewsReported")]
     private $UsersReports;
 
     public function __construct()
@@ -89,10 +72,7 @@ class Review
         return $this->publishedAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @return self
-     */
+    #[ORM\PrePersist]
     public function setPublishedAt(): self
     {
         $this->publishedAt = new \DateTimeImmutable();
@@ -105,10 +85,7 @@ class Review
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @return self
-     */
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -121,10 +98,7 @@ class Review
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate
-     * @return self
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTimeImmutable();

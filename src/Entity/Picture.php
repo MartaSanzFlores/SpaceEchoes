@@ -11,93 +11,65 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=PictureRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: PictureRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Picture
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     * @Groups({"get_collection_picture"})
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
+    #[Groups(["get_collection_picture"])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=2083)
-     * @Groups({"get_collection_post", "get_collection_picture"})
-     * @Assert\NotBlank
-     */
+    #[ORM\Column(type: "string", length: 2083)]
+    #[Groups(["get_collection_post", "get_collection_picture"])]
+    #[Assert\NotBlank]
     private $url;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     * @Groups({"get_collection_picture"})
-     */
+    #[ORM\Column(type: "string", length: 500, nullable: true)]
+    #[Groups(["get_collection_picture"])]
     private $description;
 
-    /**
-     * @ORM\Column(type="string", length=500)
-     * @Groups({"get_collection_post", "get_collection_picture"})
-     * @Assert\NotBlank
-     */
+    #[ORM\Column(type: "string", length: 500)]
+    #[Groups(["get_collection_post", "get_collection_picture"])]
+    #[Assert\NotBlank]
     private $credit;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups({"get_collection_post", "get_collection_picture"})
-     * @Assert\NotBlank
-     */
+    #[ORM\Column(type: "string", length: 100)]
+    #[Groups(["get_collection_post", "get_collection_picture"])]
+    #[Assert\NotBlank]
     private $altText;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull
-     * @Assert\Type(type="bool")
-     */
+    #[ORM\Column(type: "boolean")]
+    #[Assert\NotNull]
+    #[Assert\Type(type: "bool")]
     private $galery;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"get_collection_picture"})
-     */
+    #[ORM\Column(type: "string", length: 50, nullable: true)]
+    #[Groups(["get_collection_picture"])]
     private $slug;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups({"get_collection_picture"})
-     */
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
+    #[Groups(["get_collection_picture"])]
     private $publishedAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(type: "datetime_immutable", options: ["default" => "CURRENT_TIMESTAMP"])]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
     private $updatedAt;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Post::class, mappedBy="picture", cascade={"persist", "remove"})
-     */
+    
+    #[ORM\OneToOne(targetEntity: Post::class, mappedBy: "picture", cascade: ["persist", "remove"])]
     private $post;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $UserPicture;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="pictures")
-     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: "pictures")]
     private $usersLikes;
 
-    
+
     public function __construct()
     {
         $this->usersLikes = new ArrayCollection();
@@ -197,9 +169,7 @@ class Picture
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function setCreatedAt(): self
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -211,10 +181,8 @@ class Picture
     {
         return $this->updatedAt;
     }
-
-    /**
-     * @ORM\PreUpdate
-     */
+    
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new \DateTimeImmutable();
